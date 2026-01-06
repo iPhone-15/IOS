@@ -15,7 +15,7 @@ STATIC_DOMAINS = {
     "dmm.co.jp", "dmm.com", "fanza.co.jp", "fanzatv.jp",
     "dmm-extension.com", "dmmapis.com", "api-p.dmm.com",
     "cc.dmm.co.jp", "pics.dmm.co.jp", "image.dmm.co.jp",
-    "i3.img.dmm.com", "mgstage.com", "mgsops.net",
+    "i3.img.dmm.com", "av-event.jp", "av-event.co.jp", "av-event.com", "mgstage.com", "mgsops.net",
     "sod.co.jp", "s1s1s1.com", "moodyz.com","av-e-body.com","madonna-av.com","unext.co.jp","unext.jp","faleno.jp","prestige-av.com", "ideapocket.com"
 }
 
