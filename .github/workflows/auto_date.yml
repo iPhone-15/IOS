@@ -1,0 +1,41 @@
+name: Auto Update JAV Rules
+
+on:
+  schedule:
+    # 北京時間 06:00 = UTC 22:00 (前一天)
+    - cron: '0 22 * * *'
+  workflow_dispatch: # 允許手動點擊按鈕觸發
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # 必須賦予寫入權限
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip' # 開啟 pip 緩存
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Execute Script
+        run: |
+          python scripts/main.py
+
+      - name: Commit and Push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-update JAV.list [skip ci]"
+          file_pattern: rules/JAV.list
+          branch: main
+          user_name: "github-actions[bot]"
+          user_email: "41898282+github-actions[bot]@users.noreply.github.com"
