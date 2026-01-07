@@ -1,6 +1,6 @@
 # NAME: JAV Professional Rules
-# UPDATED: 2026-01-07 06:15:36 (Beijing Time)
-# COUNT: 26
+# UPDATED: 2026-01-07 15:47:00 (Beijing Time)
+# COUNT: 29
 # TYPE: DOMAIN-SUFFIX
 
 DOMAIN-SUFFIX,api-p.dmm.com
@@ -27,5 +27,8 @@ DOMAIN-SUFFIX,pics.dmm.co.jp
 DOMAIN-SUFFIX,prestige-av.com
 DOMAIN-SUFFIX,s1s1s1.com
 DOMAIN-SUFFIX,sod.co.jp
+DOMAIN-SUFFIX,softbank.jp
+DOMAIN-SUFFIX,unext-hd.co.jp
+DOMAIN-SUFFIX,unext-hd.jp
 DOMAIN-SUFFIX,unext.co.jp
 DOMAIN-SUFFIX,unext.jp
