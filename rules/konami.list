@@ -1,0 +1,14 @@
+# Konami & Master Duel Rules for Shadowrocket
+# Updated: 2026-01-08 22:18:41 (Beijing Time)
+# Source: Local + v2fly/domain-list-community
+# Total Domains: 7
+
+DOMAIN-SUFFIX,duellinks.konami.net
+DOMAIN-SUFFIX,konami-md.jp
+DOMAIN-SUFFIX,konami.net
+DOMAIN-SUFFIX,md-game.konami.net
+DOMAIN-SUFFIX,md-info.konami.net
+DOMAIN-SUFFIX,p.eagate.573.jp
+DOMAIN-SUFFIX,yugioh-card.com
+DOMAIN-KEYWORD,masterduel
+DOMAIN-KEYWORD,yugioh
