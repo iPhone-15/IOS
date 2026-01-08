@@ -1,0 +1,40 @@
+name: Update Konami Rules
+
+on:
+  schedule:
+    # 北京时间 06:00 = UTC 22:00
+    - cron: '0 22 * * *'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 赋予写入权限以便提交代码
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install pytz requests
+
+
+      - name: Run generator script
+        run: |
+          python scripts/generate.py
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add rules/konami.list
+          # 如果文件有变动则提交，无变动则跳过
+          git commit -m "Auto-update Konami rules [$(date)]" || echo "No changes to commit"
+          git push
