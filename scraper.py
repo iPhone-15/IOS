@@ -1,80 +1,68 @@
 import requests
-from bs4 import BeautifulSoup
-from urllib.parse import urlparse
-import re
+import time
 
-# 目標 URL：這裡是維基百科的日本AV片商列表（示例，可更換為其他聚合站）
-TARGET_URL = "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%80%E3%83%AB%E3%83%88%E3%83%93%E3%83%87%E3%82%AA%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC%E4%B8%80%E8%A6%A7"
-
-# 偽裝成瀏覽器
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-}
-
-def get_domains():
-    try:
-        response = requests.get(TARGET_URL, headers=HEADERS, timeout=10)
-        response.raise_for_status()
-    except Exception as e:
-        print(f"Error fetching URL: {e}")
-        return []
-
-    soup = BeautifulSoup(response.content, 'html.parser')
-    domains = set()
-
-    # 針對維基百科表格中的外部連結進行提取
-    # 注意：具體 Selector 需根據目標網站結構調整
-    # 這裡假設提取主要內容區的所有外部連結
-    content_div = soup.find('div', {'id': 'bodyContent'})
+def get_jav_domains_from_wikidata():
+    # SPARQL 查询语句：
+    # 查找所有 (实例是=成人视频制造商) 且 (国家=日本) 的 (官方网站)
+    url = 'https://query.wikidata.org/sparql'
+    query = """
+    SELECT DISTINCT ?website WHERE {
+      ?item wdt:P31/wdt:P279* wd:Q2081546 .  # 实例是：成人视频制造商
+      ?item wdt:P17 wd:Q17 .                 # 国家是：日本
+      ?item wdt:P856 ?website .              # 获取官方网站属性
+    }
+    """
     
-    if not content_div:
+    # Wikidata 要求必须带 User-Agent
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Python/3.9 QuantumultX-List-Generator',
+        'Accept': 'application/json'
+    }
+
+    try:
+        r = requests.get(url, params={'format': 'json', 'query': query}, headers=headers, timeout=30)
+        r.raise_for_status()
+        data = r.json()
+    except Exception as e:
+        print(f"Wikidata Query Failed: {e}")
         return []
 
-    for link in content_div.find_all('a', href=True):
-        href = link['href']
+    domains = set()
+    
+    for item in data['results']['bindings']:
+        raw_url = item['website']['value']
+        # 简单的域名提取逻辑
+        from urllib.parse import urlparse
+        parsed = urlparse(raw_url)
+        domain = parsed.netloc
         
-        # 過濾非 http 開頭的內部連結
-        if not href.startswith('http'):
-            continue
-            
-        # 排除維基百科自身和其他無關域名
-        if 'wikipedia.org' in href or 'archive.org' in href:
-            continue
-
-        # 提取主域名
-        parsed_uri = urlparse(href)
-        domain = parsed_uri.netloc
-        
-        # 移除 www. 前綴以保持簡潔
+        # 移除 www.
         if domain.startswith('www.'):
             domain = domain[4:]
-            
-        if domain:
+        
+        # 过滤掉常见的平台域名（如果不想包含 DMM 或 Twitter 等）
+        if 'twitter.com' not in domain and 'facebook.com' not in domain:
             domains.add(domain)
 
     return sorted(list(domains))
 
 def generate_qx_file(domain_list):
     header = [
-        "; Summary: Auto-generated Japanese Adult Video Manufacturer Domains",
-        "; Compatible with QuantumultX",
-        "; Update Frequency: Weekly",
+        "; Summary: JAV Studio Domains from Wikidata",
+        "; Total Rules: " + str(len(domain_list)),
+        "; Updated: " + time.strftime("%Y-%m-%d"),
         ""
     ]
-    
-    # 策略偏好：可預設為 PROXY 或 DIRECT，使用者可在 QX 中覆蓋
-    # 格式：HOST-SUFFIX, domain.com, Tag
     rules = [f"HOST-SUFFIX,{d},Japan_Media" for d in domain_list]
-    
     content = "\n".join(header + rules)
     
     with open("jav_manufacturers.list", "w", encoding="utf-8") as f:
         f.write(content)
-    print(f"Successfully generated {len(domain_list)} rules.")
+    print(f"Success! Generated {len(domain_list)} domains.")
 
 if __name__ == "__main__":
-    print("Starting scraper...")
-    domains = get_domains()
+    print("Querying Wikidata...")
+    domains = get_jav_domains_from_wikidata()
     if domains:
         generate_qx_file(domains)
     else:
