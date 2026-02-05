@@ -1,34 +1,34 @@
 # NAME: JAV Professional Rules
 # UPDATED: 2026-02-05 06:19:52 (Beijing Time)
 # COUNT: 29
-# TYPE: DOMAIN-SUFFIX
+# TYPE: HOST-SUFFIX
 
-DOMAIN-SUFFIX,api-p.dmm.com
-DOMAIN-SUFFIX,av-e-body.com
-DOMAIN-SUFFIX,av-event.co.jp
-DOMAIN-SUFFIX,av-event.com
-DOMAIN-SUFFIX,av-event.jp
-DOMAIN-SUFFIX,cc.dmm.co.jp
-DOMAIN-SUFFIX,dmm-extension.com
-DOMAIN-SUFFIX,dmm.co.jp
-DOMAIN-SUFFIX,dmm.com
-DOMAIN-SUFFIX,dmmapis.com
-DOMAIN-SUFFIX,faleno.jp
-DOMAIN-SUFFIX,fanza.co.jp
-DOMAIN-SUFFIX,fanzatv.jp
-DOMAIN-SUFFIX,i3.img.dmm.com
-DOMAIN-SUFFIX,ideapocket.com
-DOMAIN-SUFFIX,image.dmm.co.jp
-DOMAIN-SUFFIX,madonna-av.com
-DOMAIN-SUFFIX,mgsops.net
-DOMAIN-SUFFIX,mgstage.com
-DOMAIN-SUFFIX,moodyz.com
-DOMAIN-SUFFIX,pics.dmm.co.jp
-DOMAIN-SUFFIX,prestige-av.com
-DOMAIN-SUFFIX,s1s1s1.com
-DOMAIN-SUFFIX,sod.co.jp
-DOMAIN-SUFFIX,softbank.jp
-DOMAIN-SUFFIX,unext-hd.co.jp
-DOMAIN-SUFFIX,unext-hd.jp
-DOMAIN-SUFFIX,unext.co.jp
-DOMAIN-SUFFIX,unext.jp
+HOST-SUFFIX,api-p.dmm.com
+HOST-SUFFIX,av-e-body.com
+HOST-SUFFIX,av-event.co.jp
+HOST-SUFFIX,av-event.com
+HOST-SUFFIX,av-event.jp
+HOST-SUFFIX,cc.dmm.co.jp
+HOST-SUFFIX,dmm-extension.com
+HOST-SUFFIX,dmm.co.jp
+HOST-SUFFIX,dmm.com
+HOST-SUFFIX,dmmapis.com
+HOST-SUFFIX,faleno.jp
+HOST-SUFFIX,fanza.co.jp
+HOST-SUFFIX,fanzatv.jp
+HOST-SUFFIX,i3.img.dmm.com
+HOST-SUFFIX,ideapocket.com
+HOST-SUFFIX,image.dmm.co.jp
+HOST-SUFFIX,madonna-av.com
+HOST-SUFFIX,mgsops.net
+HOST-SUFFIXHOST-SUFFIX,mgstage.com
+HOST-SUFFIX,moodyz.com
+HOST-SUFFIX,pics.dmm.co.jp
+HOST-SUFFIX,prestige-av.com
+HOST-SUFFIX,s1s1s1.com
+HOST-SUFFIX,sod.co.jp
+HOST-SUFFIX,softbank.jp
+HOST-SUFFIX,unext-hd.co.jp
+HOST-SUFFIX,unext-hd.jp
+HOST-SUFFIX,unext.co.jp
+HOST-SUFFIX,unext.jp
