@@ -11,7 +11,7 @@ TIMEOUT = 10
 
 # 1. 靜態核心名單 (保底數據，確保基礎服務可用)
 # 包含 FANZA/DMM 及其常見 CDN 和 API 域名
-STATIC_DOMAINS = {
+STATIC_HOSTS = {
     "dmm.co.jp", "dmm.com", "fanza.co.jp", "fanzatv.jp",
     "dmm-extension.com", "dmmapis.com", "api-p.dmm.com",
     "cc.dmm.co.jp", "pics.dmm.co.jp", "image.dmm.co.jp",
@@ -25,7 +25,7 @@ UPSTREAM_URLS = [
     # "https://raw.githubusercontent.com/user/repo/main/other_rules.txt", 
 ]
 
-def fetch_dynamic_domains():
+def fetch_dynamic_hosts():
     """從上游 URL 獲取動態域名，並進行簡單清洗"""
     dynamic_set = set()
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
@@ -37,10 +37,10 @@ def fetch_dynamic_domains():
             if resp.status_code == 200:
                 lines = resp.text.splitlines()
                 for line in lines:
-                    domain = line.strip()
+                    host = line.strip()
                     # 簡單過濾：排除註釋和空行
-                    if domain and not domain.startswith('#'):
-                        dynamic_set.add(domain)
+                    if host and not host.startswith('#'):
+                        dynamic_set.addhost)
             else:
                 print(f"Failed to fetch {url}: Status {resp.status_code}")
         except Exception as e:
@@ -48,19 +48,19 @@ def fetch_dynamic_domains():
             
     return dynamic_set
 
-def generate_content(domains):
+def generate_contenthosts):
     """生成符合 Shadowrocket 格式的內容"""
-    sorted_domains = sorted(list(domains))
+    sorted_hosts = sorted(listhosts))
     
     lines = []
     lines.append("# NAME: JAV Professional Rules")
     lines.append(f"# UPDATED: {datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S')} (Beijing Time)")
-    lines.append(f"# COUNT: {len(sorted_domains)}")
-    lines.append("# TYPE: DOMAIN-SUFFIX")
+    lines.append(f"# COUNT: {len(sorted_hosts)}")
+    lines.append("# TYPE: HOST-SUFFIX")
     lines.append("")
     
-    for domain in sorted_domains:
-        lines.append(f"DOMAIN-SUFFIX,{domain}")
+    for host in sorted_hosts:
+        lines.append(f"HOST-SUFFIX,{hosts}")
         
     return "\n".join(lines)
 
@@ -70,19 +70,19 @@ def main():
         os.makedirs(OUTPUT_DIR)
 
     # 聚合數據
-    final_domains = STATIC_DOMAINS.copy()
-    dynamic_domains = fetch_dynamic_domains()
-    final_domains.update(dynamic_domains)
+    final_hosts = STATICHOSTS.copy()
+    dynamic_hosts = fetch_dynamic_hosts()
+    final_hosts.update(dynamic_hosts)
 
-    print(f"Total domains collected: {len(final_domains)}")
+    print(f"Total hosts collected: {len(final_hosts)}")
 
     # 安全檢查：如果域名數量異常少（例如邏輯崩潰），則報錯並不覆蓋舊文件
-    if len(final_domains) < 5:
-        print("Error: Domain count too low. Aborting to prevent overwriting with empty list.")
+    if len(final_hosts) < 5:
+        print("Error: hosts count too low. Aborting to prevent overwriting with empty list.")
         sys.exit(1)
 
     # 寫入文件
-    content = generate_content(final_domains)
+    content = generate_content(final_hosts)
     with open(FULL_PATH, 'w', encoding='utf-8') as f:
         f.write(content)
     
